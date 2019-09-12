@@ -29,10 +29,10 @@ void neg(string nome) {
     }
     
 
-    for(int i = 0; i<imagem.rows; i++)
-        for(int j=0; j<imagem.cols; j++)
-            for(int k =0; k<imagem.channels(); k++)
-                imagem.at<Vec3b>(i,j)[k] = 255 - imagem.at<Vec3b>(i,j)[k];
+    for(int i = 0; i<imagem.channels(); i++)
+        for(int j=0; j<imagem.rows; j++)
+            for(int k =0; k<imagem.cols; k++)
+                imagem.at<Vec3b>(j,k)[i] = 255 - imagem.at<Vec3b>(j,k)[i];
             
 
     namedWindow("Janela",WINDOW_NORMAL);

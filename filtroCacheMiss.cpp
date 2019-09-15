@@ -9,8 +9,9 @@ using namespace cv;
 void neg(string nome);
 
 int main(){
+	clock_t tempo = clock();
 	string imgs[4] = {"arara.jpg","astro.jpg","elsa.jpg","paisagem.jpg"};
-    clock_t tempo = clock();
+	int tam = sizeof(imgs)/sizeof(imgs[0]);
     for(int f=0;f<4;f++){
     	neg(imgs[f]);
     }
@@ -22,7 +23,7 @@ int main(){
 void neg(string nome) {
 	Mat imagem;
 
-    imagem = imread(nome,IMREAD_COLOR);
+    imagem = imread(nome,IMREAD_COLOR);		//Le a imagem de entrada e converte ela para uma matriz de 3 canais (BGR)
 
     if(!imagem.data){
         cout<<"Aconteceu erros com a leitura da imagem!"<<endl;
@@ -37,7 +38,7 @@ void neg(string nome) {
 
     namedWindow("Janela",WINDOW_NORMAL);
     imshow("Janela",imagem);
-    waitKey(600);
+    waitKey(300);
 }
 
 

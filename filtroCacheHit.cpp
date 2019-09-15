@@ -9,9 +9,10 @@ using namespace cv;
 void neg(string nome);
 
 int main(){
-	string imgs[4] = {"arara.jpg","astro.jpg","elsa.jpg","paisagem.jpg"};
     clock_t tempo = clock();
-    for(int f=0;f<4;f++){
+	string imgs[4] = {"arara.jpg","astro.jpg","elsa.jpg","paisagem.jpg"};
+	int tam = sizeof(imgs)/sizeof(imgs[0]);
+    for(int f=0;f<tam;f++){
     	neg(imgs[f]);
     }
     
@@ -22,7 +23,7 @@ int main(){
 void neg(string nome) {
 	Mat imagem;
 
-    imagem = imread(nome,IMREAD_COLOR);
+    imagem = imread(nome,IMREAD_COLOR);		//Le a imagem de entrada e converte ela para uma matriz de 3 canais (BGR)
 
     if(!imagem.data){
         cout<<"Aconteceu erros com a leitura da imagem!"<<endl;
@@ -30,14 +31,15 @@ void neg(string nome) {
     
 
     for(int i = 0; i<imagem.rows; i++)
-        for(int j=0; j<imagem.cols; j++)
-            for(int k =0; k<imagem.channels(); k++)
-                imagem.at<Vec3b>(i,j)[k] = 255 - imagem.at<Vec3b>(i,j)[k];
-            
+        for(int j=0; j<imagem.cols; j++){
+                imagem.at<Vec3b>(i,j)[0] = 255 - imagem.at<Vec3b>(i,j)[0];    //Blue
+                imagem.at<Vec3b>(i,j)[1] = 255 - imagem.at<Vec3b>(i,j)[1];	  //Green
+                imagem.at<Vec3b>(i,j)[2] = 255 - imagem.at<Vec3b>(i,j)[2];	  //Red
+        }
 
     namedWindow("Janela",WINDOW_NORMAL);
     imshow("Janela",imagem);
-    waitKey(600);
+    waitKey(300);
 }
 
 

@@ -38,7 +38,7 @@ void neg(string nome) {
 
     namedWindow("Janela",WINDOW_NORMAL);
     imshow("Janela",imagem);
-    waitKey(300);
+    //waitKey(300);
 }
 
 

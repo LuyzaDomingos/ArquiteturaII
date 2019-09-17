@@ -13,8 +13,12 @@ int main(){
 	clock_t tempo = clock();
     string imgs[4] = {"im1.jpg","im2.jpg","im3.jpg","im4.jpg","im5.jpg","im6.jpg","im7.jpg","im8.jpg","im9.jpg","im10.jpg","im11.jpg","im12.jpg","im13.jpg","im14.jpg","im15.jpg","im16.jpg"};
 	int tam = sizeof(imgs)/sizeof(imgs[0]);
+    #pragma omp parallel
+    {
+    #pragma omp for nowait
     for(int f=0;f<tam;f++){
     	neg(imgs[f]);
+    }
     } 
     cout<<"tempo de processamento:"<<(double)(clock() - tempo)/CLOCKS_PER_SEC<<endl;
     return 0;

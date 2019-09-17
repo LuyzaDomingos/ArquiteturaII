@@ -11,7 +11,7 @@ void neg(string nome);
 
 int main(){
 	clock_t tempo = clock();
-    string imgs[4] = {"arara.jpg","astro.jpg","elsa.jpg","paisagem.jpg"};
+    string imgs[4] = {"im1.jpg","im2.jpg","im3.jpg","im4.jpg","im5.jpg","im6.jpg","im7.jpg","im8.jpg","im9.jpg","im10.jpg","im11.jpg","im12.jpg","im13.jpg","im14.jpg","im15.jpg","im16.jpg"};
 	int tam = sizeof(imgs)/sizeof(imgs[0]);
     for(int f=0;f<tam;f++){
     	neg(imgs[f]);
@@ -29,24 +29,26 @@ void neg(string nome) {
         cout<<"Aconteceu erros com a leitura da imagem!"<<endl;
     }
     
+    #pragma omp parallel 
+    {
+    #pragma omp for nowait collapse(2)
     for(int i = 0; i<imagem.rows; i++)
         for(int j=0; j<imagem.cols; j++)
             imagem.at<Vec3b>(i,j)[0] = 255 - imagem.at<Vec3b>(i,j)[0];
-            
+
+     #pragma omp for nowait collapse(2)
      for(int i = 0; i<imagem.rows; i++)
         for(int j=0; j<imagem.cols; j++)
         imagem.at<Vec3b>(i,j)[1] = 255 - imagem.at<Vec3b>(i,j)[1];
         
-    
+     #pragma omp for nowait collapse(2)
      for(int i = 0; i<imagem.rows; i++)
         for(int j=0; j<imagem.cols; j++)
             imagem.at<Vec3b>(i,j)[2] = 255 - imagem.at<Vec3b>(i,j)[2];
-        
+    }
         
     namedWindow("Janela",WINDOW_NORMAL);
     imshow("Janela",imagem);
-    waitKey(300);
+    //waitKey(300);
 
 }
-
-

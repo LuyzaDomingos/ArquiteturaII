@@ -11,15 +11,15 @@ void neg(string nome);
 
 int main(){
 	clock_t tempo = clock();
-    string imgs[4] = {"im1.jpg","im2.jpg","im3.jpg","im4.jpg","im5.jpg","im6.jpg","im7.jpg","im8.jpg","im9.jpg","im10.jpg","im11.jpg","im12.jpg","im13.jpg","im14.jpg","im15.jpg","im16.jpg"};
+    string imgs[1] = {"im1.jpg"};
 	int tam = sizeof(imgs)/sizeof(imgs[0]);
     #pragma omp parallel
     {
-    #pragma omp for nowait
-    for(int f=0;f<tam;f++){
-    	neg(imgs[f]);
+        #pragma omp for nowait
+        for(int f=0;f<tam;f++){
+            neg(imgs[f]);
+        }
     }
-    } 
     cout<<"tempo de processamento:"<<(double)(clock() - tempo)/CLOCKS_PER_SEC<<endl;
     return 0;
 }
@@ -32,18 +32,19 @@ void neg(string nome) {
     if(!imagem.data){
         cout<<"Aconteceu erros com a leitura da imagem!"<<endl;
     }
-    
-    #pragma omp parallel 
+
+    #pragma omp parallel
     {
-    #pragma omp for nowait collapse(3)
-        for(int i = 0; i<imagem.rows; i++)
+        #pragma omp for nowait collapse(3)
+        for(int i = 0; i<imagem.rows; i++){
         for(int j=0; j<imagem.cols; j++){
                 imagem.at<Vec3b>(i,j)[0] = 255 - imagem.at<Vec3b>(i,j)[0];    //Blue
                 imagem.at<Vec3b>(i,j)[1] = 255 - imagem.at<Vec3b>(i,j)[1];	  //Green
                 imagem.at<Vec3b>(i,j)[2] = 255 - imagem.at<Vec3b>(i,j)[2];	  //Red
+            }
         }
     }
-        
+
     namedWindow("Janela",WINDOW_NORMAL);
     imshow("Janela",imagem);
     //waitKey(300);

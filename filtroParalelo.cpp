@@ -35,9 +35,9 @@ void neg(string nome) {
 
     #pragma omp parallel
     {
-        #pragma omp for nowait collapse(3)
-        for(int i = 0; i<imagem.rows; i++){
-        for(int j=0; j<imagem.cols; j++){
+        #pragma omp for nowait collapse(2)
+        for(int i = 0; i<(imagem.rows)/16;i++){
+        for(int j=0; j<(imagem.cols)/16; j++){
                 imagem.at<Vec3b>(i,j)[0] = 255 - imagem.at<Vec3b>(i,j)[0];    //Blue
                 imagem.at<Vec3b>(i,j)[1] = 255 - imagem.at<Vec3b>(i,j)[1];	  //Green
                 imagem.at<Vec3b>(i,j)[2] = 255 - imagem.at<Vec3b>(i,j)[2];	  //Red
@@ -46,7 +46,8 @@ void neg(string nome) {
     }
 
     namedWindow("Janela",WINDOW_NORMAL);
-    imshow("Janela",imagem);
+    //imshow("Janela",imagem);
+    imwrite("teste2.jpg",imagem);
     //waitKey(300);
 
 }
